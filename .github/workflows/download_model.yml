@@ -1,12 +1,16 @@
 name: Download Hugging Face Model
 
 on:
-  workflow_dispatch: # This allows you to manually trigger the action
+  workflow_dispatch:
     inputs:
       model_id:
         description: 'Hugging Face Model ID (e.g., google-bert/bert-base-uncased)'
         required: true
         default: 'google-bert/bert-base-uncased'
+      include_snapshots:
+        description: 'Download full snapshot (all files)'
+        type: boolean
+        default: true
 
 jobs:
   download-model:
@@ -20,17 +24,28 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Hugging Face Hub
-        run: pip install huggingface-hub
-
-      - name: Download Model
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }} # Optional: for private models
+      - name: Install hf (Hugging Face CLI)
         run: |
-          # Download the full model repository
-          huggingface-cli download ${{ github.event.inputs.model_id }} --local-dir ./model --local-dir-use-symlinks False
+          pip install --upgrade huggingface-hub
+          # 'hf' is now part of huggingface-hub
 
-      - name: Upload Model as Artifact
+      - name: Login to Hugging Face (optional, for private models)
+        if: ${{ secrets.HF_TOKEN != '' }}
+        run: hf auth login --token ${{ secrets.HF_TOKEN }}
+
+      - name: Download model using hf
+        run: |
+          # Create output directory
+          mkdir -p ./model
+          
+          # Download the full model repository
+          # Use --repo-type model (default) and --include "*" for all files
+          hf download ${{ github.event.inputs.model_id }} \
+            --repo-type model \
+            --local-dir ./model \
+            --local-dir-use-symlinks False
+
+      - name: Upload model as artifact
         uses: actions/upload-artifact@v4
         with:
           name: hf-model-${{ github.event.inputs.model_id }}
