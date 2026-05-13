@@ -6,11 +6,12 @@ on:
       model_id:
         description: 'Hugging Face Model ID (e.g., google-bert/bert-base-uncased)'
         required: true
-        default: 'google-bert/bert-base-uncased'
-      include_snapshots:
-        description: 'Download full snapshot (all files)'
-        type: boolean
-        default: true
+        default: ''
+        
+      file_address:
+        description: 'address of filename (e.g., prompt_enhancer/sulphur_prompt_enhancer_model-q8_0.gguf)'
+        required: true
+        default: ''
 
 jobs:
   download-model:
@@ -33,17 +34,13 @@ jobs:
         if: ${{ secrets.HF_TOKEN != '' }}
         run: hf auth login --token ${{ secrets.HF_TOKEN }}
 
-      - name: Download model using hf
+      - name: Download single file using hf
         run: |
-          # Create output directory
-          mkdir -p ./model
-          
-          # Download the full model repository
-          # Use --repo-type model (default) and --include "*" for all files
+          mkdir -p ./model/prompt_enhancer
           hf download ${{ github.event.inputs.model_id }} \
-            --repo-type model \
-            --local-dir ./model \
-            --local-dir-use-symlinks False
+          --include "${{ github.event.inputs.file_address }}" \
+          --local-dir ./model \
+          --local-dir-use-symlinks False
 
       - name: Upload model as artifact
         uses: actions/upload-artifact@v4
