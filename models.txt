@@ -1,50 +1,50 @@
-SulphurAI/Sulphur-2-base: No description available
-Zyphra/ZAYA1-8B: No description available
-openbmb/MiniCPM-V-4.6: No description available
-HiDream-ai/HiDream-O1-Image: No description available
-deepseek-ai/DeepSeek-V4-Pro: No description available
-Supertone/supertonic-3: No description available
-SeeSee21/Z-Anime: No description available
-TenStrip/LTX2.3-10Eros: No description available
-Qwen/Qwen3.6-27B: No description available
-google/gemma-4-31B-it-assistant: No description available
-deepseek-ai/DeepSeek-V4-Flash: No description available
-unsloth/Qwen3.6-27B-MTP-GGUF: No description available
-openai/privacy-filter: No description available
-Qwen/Qwen3.6-35B-A3B: No description available
-froggeric/Qwen-Fixed-Chat-Templates: No description available
-HiDream-ai/HiDream-O1-Image-Dev: No description available
-k2-fsa/OmniVoice: No description available
-unsloth/Qwen3.6-35B-A3B-MTP-GGUF: No description available
-Jackrong/Qwopus3.6-35B-A3B-v1-GGUF: No description available
-sensenova/SenseNova-U1-8B-MoT: No description available
-google/gemma-4-31B-it: No description available
-havenoammo/Qwen3.6-27B-MTP-UD-GGUF: No description available
-Jiunsong/supergemma4-26b-uncensored-gguf-v2: No description available
-AngelSlim/Hy-MT1.5-1.8B-1.25bit: No description available
-unsloth/Qwen3.6-35B-A3B-GGUF: No description available
-jackxinning/Leanly_AI: No description available
-unsloth/Qwen3.6-27B-GGUF: No description available
-antirez/deepseek-v4-gguf: No description available
-RuneXX/LTX-2.3-Workflows: No description available
-DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF: No description available
-moonshotai/Kimi-K2.6: No description available
-havenoammo/Qwen3.6-35B-A3B-MTP-GGUF: No description available
-google/gemma-4-E4B-it: No description available
-google/gemma-4-26B-A4B-it-assistant: No description available
-RunDiffusion/Juggernaut-Z-Image: No description available
-DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-NEO-CODE-Di-IMatrix-MAX-GGUF: No description available
-XiaomiMiMo/MiMo-V2.5-Pro: No description available
-joyfox/LTX2.3-ICEdit-Insight: No description available
-google/gemma-4-26B-A4B-it: No description available
-HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive: No description available
-z-lab/gemma-4-31B-it-DFlash: No description available
-AIDC-AI/Ovis2.6-80B-A3B: No description available
-TencentARC/Pixal3D: No description available
-Lightricks/LTX-2.3: No description available
-froggeric/Qwen3.6-27B-MTP-GGUF: No description available
-Comfy-Org/HiDream-O1-Image: No description available
-unsloth/gemma-4-26B-A4B-it-GGUF: No description available
-manjunathshiva/gpt-oss-20b-tq3: No description available
-z-lab/Qwen3.6-27B-DFlash: No description available
-google/gemma-4-E4B-it-assistant: No description available
+SulphurAI/Sulphur-2-base: **Sulphur 2**
+Zyphra/ZAYA1-8B: ZAYA1-8B is a small mixture of experts language model with 760M active parameters and 8.4B total parameters trained end-to-end by Zyphra. ZAYA1-8B sets a new standard of intelligence efficiency for...
+openbmb/MiniCPM-V-4.6: A Pocket-Sized MLLM for Ultra-Efficient Image and Video Understanding on Your Phone
+HiDream-ai/HiDream-O1-Image: HiDream-O1-Image is a natively unified image generative foundation model built on a Pixel-level Unified Transformer (UiT) without external VAEs or disjoint text encoders, which natively encodes raw...
+deepseek-ai/DeepSeek-V4-Pro: <!-- markdownlint-disable first-line-h1 -->
+Supertone/supertonic-3: ![Supertonic 3 Preview](img/Supertonic3_HeroImage.png)
+SeeSee21/Z-Anime: <div align="center">
+TenStrip/LTX2.3-10Eros: **10 Eros**
+Qwen/Qwen3.6-27B: <img width="400px" src="https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen3.6/logo.png">
+google/gemma-4-31B-it-assistant: <div align="center">
+deepseek-ai/DeepSeek-V4-Flash: <!-- markdownlint-disable first-line-h1 -->
+unsloth/Qwen3.6-27B-MTP-GGUF: <p style="margin: 0 0 0px 0; margin-top: 0px;">
+openai/privacy-filter: OpenAI Privacy Filter is a bidirectional token-classification model for personally identifiable information (PII) detection and masking in text. It is intended for high-throughput data sanitization...
+Qwen/Qwen3.6-35B-A3B: <img width="400px" src="https://qianwen-res.oss-accelerate.aliyuncs.com/Qwen3.6/logo.png">
+froggeric/Qwen-Fixed-Chat-Templates: > **2026-05-05** — Reviewed against community merged templates (allanchan339, fakezeta). Confirmed all useful features already present; `from_json` string-arg parsing not portable to C++ engines. A...
+HiDream-ai/HiDream-O1-Image-Dev: HiDream-O1-Image is a natively unified image generative foundation model built on a Pixel-level Unified Transformer (UiT) without external VAEs or disjoint text encoders, which natively encodes raw...
+k2-fsa/OmniVoice: <p align="center">
+unsloth/Qwen3.6-35B-A3B-MTP-GGUF: <p style="margin: 0 0 0px 0; margin-top: 0px;">
+Jackrong/Qwopus3.6-35B-A3B-v1-GGUF: **Qwen3.6-35B-A3B** is an advanced hybrid sparse MoE (Mixture-of-Experts) model developed by Alibaba Cloud. It features 35B total parameters with only 3B active parameters per token, ensuring high ...
+sensenova/SenseNova-U1-8B-MoT: <p align="center">
+google/gemma-4-31B-it: <div align="center">
+havenoammo/Qwen3.6-27B-MTP-UD-GGUF: > [!IMPORTANT]
+Jiunsong/supergemma4-26b-uncensored-gguf-v2: The fast, uncensored `llama.cpp` build of the strongest `SuperGemma` text line.
+AngelSlim/Hy-MT1.5-1.8B-1.25bit: <p align="center">
+unsloth/Qwen3.6-35B-A3B-GGUF: <p style="margin: 0 0 0px 0; margin-top: 0px;">
+jackxinning/Leanly_AI: **Leanly_AI** is a large language model jointly developed by the **Department of Endocrinology and Metabolism** and the **Department of General Practice** at **Provincial Hospital Affiliated to Fuz...
+unsloth/Qwen3.6-27B-GGUF: <p style="margin: 0 0 0px 0; margin-top: 0px;">
+antirez/deepseek-v4-gguf: This quants are specific for the DS4 inference engine. They may work with other inference engines or not (they should, but not the MTP model which requires a specific loader).
+RuneXX/LTX-2.3-Workflows: <video controls>
+DavidAU/Qwen3.6-27B-Heretic-Uncensored-FINETUNE-NEO-CODE-Di-IMatrix-MAX-GGUF: <small><font color="red">Ultimate:</font> Exceeds Qwen 3.6 27B performance, uncensored and NEO-Di-Matrix quants to bring all that power in quant form.
+moonshotai/Kimi-K2.6: <div align="center">
+havenoammo/Qwen3.6-35B-A3B-MTP-GGUF: > [!IMPORTANT]
+google/gemma-4-E4B-it: <div align="center">
+google/gemma-4-26B-A4B-it-assistant: <div align="center">
+RunDiffusion/Juggernaut-Z-Image: <div align="center">
+DavidAU/Qwen3.6-40B-Claude-4.6-Opus-Deckard-Heretic-Uncensored-Thinking-NEO-CODE-Di-IMatrix-MAX-GGUF: <small><font color="red">Ultimate NEO GGUF QUANTS:</font> Custom built DUAL Imatrix NEO-CODER quants that exceed all other quants in terms of quality,
+XiaomiMiMo/MiMo-V2.5-Pro: <div align="center">
+joyfox/LTX2.3-ICEdit-Insight: <td align="center"><img src="./assets/effects/output_004.webp" alt="Video restoration preview" width="420"/></td>
+google/gemma-4-26B-A4B-it: <div align="center">
+HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive: > **[Join the Discord](https://discord.gg/SZ5vacTXYf)** for updates, roadmaps, projects, or just to chat.
+TencentARC/Pixal3D: <div align="center">
+z-lab/gemma-4-31B-it-DFlash: [**Paper**](https://arxiv.org/abs/2602.06036) | [**GitHub**](https://github.com/z-lab/dflash) | [**Blog**](https://z-lab.ai/projects/dflash/)
+AIDC-AI/Ovis2.6-80B-A3B: <div align="center">
+Lightricks/LTX-2.3: This model card focuses on the LTX-2.3 model, which is a significant update to the [LTX-2 model](https://huggingface.co/Lightricks/LTX-2) with improved audio and visual quality as well as enhanced ...
+froggeric/Qwen3.6-27B-MTP-GGUF: <div align="center">
+Comfy-Org/HiDream-O1-Image: Repackaged model files for ComfyUI.
+unsloth/gemma-4-26B-A4B-it-GGUF: <p style="margin: 0 0 0px 0; margin-top: 0px;">
+manjunathshiva/gpt-oss-20b-tq3: **TurboQuant 3-bit MLX quantization** of [openai/gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b) — produced with [TurboQuant-MLX](https://github.com/manjunathshiva/turboquant-mlx).
+z-lab/Qwen3.6-27B-DFlash: [**Paper**](https://arxiv.org/abs/2602.06036) | [**GitHub**](https://github.com/z-lab/dflash) | [**Blog**](https://z-lab.ai/projects/dflash/)
+google/gemma-4-E4B-it-assistant: <div align="center">
