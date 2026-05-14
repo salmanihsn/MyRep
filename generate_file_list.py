@@ -1,5 +1,5 @@
 import sys
-from huggingface_hub import HfApi, list_repo_files, get_repo_files
+from huggingface_hub import HfApi, list_repo_files
 import os
 from datetime import datetime
 
@@ -13,16 +13,18 @@ def human_readable_size(size_bytes):
         size_bytes /= 1024.0
     return f"{size_bytes:.1f} TB"
 
-def get_file_info(model_id, filename):
-    """Get size of a single file using repo_file_info endpoint."""
-    api = HfApi()
-    try:
-        # Fetch file metadata
-        info = api.file_info(repo_id=model_id, path=filename)
-        size = info.size if hasattr(info, 'size') else None
-        return size
-    except Exception:
-        return None
+def get_file_sizes(model_id, files, api):
+    """Get sizes for each file, returns dict. If fails, sizes remain None."""
+    sizes = {}
+    for i, filename in enumerate(files):
+        try:
+            print(f"Fetching size for {i+1}/{len(files)}: {filename}", file=sys.stderr)
+            info = api.file_info(repo_id=model_id, path=filename)
+            sizes[filename] = info.size if hasattr(info, 'size') else None
+        except Exception as e:
+            print(f"  Warning: Could not get size for {filename}: {e}", file=sys.stderr)
+            sizes[filename] = None
+    return sizes
 
 def main():
     if len(sys.argv) < 2:
@@ -30,46 +32,56 @@ def main():
         sys.exit(1)
 
     model_id = sys.argv[1]
-    print(f"Fetching file list for: {model_id}")
+    print(f"Fetching file list for: {model_id}", file=sys.stderr)
 
     api = HfApi()
-    # Get all files in the repository (recursive)
     try:
+        # Get all files recursively
         files = list(list_repo_files(model_id))
+        print(f"Found {len(files)} files", file=sys.stderr)
     except Exception as e:
-        print(f"Error fetching file list: {e}")
+        print(f"ERROR fetching file list: {e}", file=sys.stderr)
+        # Write error to file_list.md so user sees it
+        with open("file_list.md", "w", encoding="utf-8") as f:
+            f.write(f"# Error\n\nCould not fetch file list for `{model_id}`.\n\nDetails:\n```\n{str(e)}\n```")
         sys.exit(1)
 
-    # Sort files alphabetically
+    # Sort for readability
     files.sort()
 
-    # Collect file sizes
-    print("Collecting file sizes (this may take a while for large repos)...")
-    file_data = []
-    for f in files:
-        size_bytes = get_file_info(model_id, f)
-        file_data.append((f, size_bytes))
+    # Try to get file sizes (optional; if it fails, show "Unknown")
+    sizes = {}
+    try:
+        sizes = get_file_sizes(model_id, files, api)
+    except Exception as e:
+        print(f"Warning: Could not retrieve file sizes: {e}", file=sys.stderr)
+        # Continue without sizes
 
-    # Generate markdown output
+    # Generate markdown
     output = []
     output.append(f"# File List for `{model_id}`\n")
     output.append(f"Generated on: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}\n")
-    output.append(f"Total files: {len(files)}\n")
+    output.append(f"**Total files:** {len(files)}\n")
     output.append("## Files\n")
     output.append("| File | Size | Direct Download URL |")
     output.append("|------|------|---------------------|")
 
-    for filename, size in file_data:
+    for filename in files:
+        size = sizes.get(filename) if filename in sizes else None
         size_str = human_readable_size(size) if size else "Unknown"
-        # Direct download URL (raw)
-        url = f"https://huggingface.co/{model_id}/resolve/main/{filename}"
-        output.append(f"| `{filename}` | {size_str} | [Download]({url}) |")
+        # URL encode the filename to handle spaces and special chars
+        import urllib.parse
+        encoded_filename = urllib.parse.quote(filename)
+        url = f"https://huggingface.co/{model_id}/resolve/main/{encoded_filename}"
+        # Markdown escape pipe characters in filename
+        safe_filename = filename.replace('|', '\\|')
+        output.append(f"| `{safe_filename}` | {size_str} | [Download]({url}) |")
 
-    # Write to file_list.md
+    # Write to file
     with open("file_list.md", "w", encoding="utf-8") as f:
         f.write("\n".join(output))
 
-    print(f"File list saved to file_list.md ({len(files)} files)")
+    print(f"Success! File list saved to file_list.md", file=sys.stderr)
 
 if __name__ == "__main__":
     main()
