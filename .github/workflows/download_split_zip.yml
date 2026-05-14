@@ -1,0 +1,49 @@
+name: Download, Split & Password‑Protect
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'URL of the file to download'
+        required: true
+        default: 'https://github.com/ggml-org/llama.cpp/releases/download/b9145/llama-b9145-bin-win-cuda-13.1-x64.zip'
+      password:
+        description: 'Password for the zip parts'
+        required: true
+        default: 'your_password_here'
+      part_size:
+        description: 'Size of each zip part (e.g., 90m, 100m)'
+        required: false
+        default: '90m'
+
+permissions:
+  contents: write   # to push the zip parts back to the repo
+
+jobs:
+  download-split-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+
+      - name: Install aria2 and zip
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y aria2 zip
+
+      - name: Run download and splitting script
+        run: |
+          python split_and_zip.py \
+            --url "${{ github.event.inputs.url }}" \
+            --password "${{ github.event.inputs.password }}" \
+            --part-size "${{ github.event.inputs.part_size }}" \
+            --output-dir "Download-Files"
+
+      - name: Commit and push split parts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Download-Files/
+          git commit -m "Add split zip parts for ${{ github.event.inputs.url }}" || echo "No changes to commit"
+          git push
