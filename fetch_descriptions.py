@@ -1,39 +1,60 @@
 from huggingface_hub import HfApi, ModelCard
+import re
 import sys
 
+def clean_text(text):
+    """Remove markdown images, HTML tags, and excessive whitespace."""
+    # Remove markdown images ![alt](url)
+    text = re.sub(r'!\[[^\]]*\]\([^\)]+\)', '', text)
+    # Remove HTML tags
+    text = re.sub(r'<[^>]+>', '', text)
+    # Remove leading/trailing whitespace
+    text = text.strip()
+    return text
+
 def get_brief_description(model_id):
-    """
-    Try to extract a short description from the model card.
-    Returns a string (max 200 chars) or "No description available".
-    """
     try:
-        # Attempt to load the model card
         card = ModelCard.load(model_id)
-    except Exception as e:
-        # Catch any exception (like EntryNotFoundError) and return the default message
+    except Exception:
         return "No description available"
 
-    # If card is loaded successfully, try to get the text content
-    # Prefer card.text (excludes metadata header) over card.content
-    text = getattr(card, 'text', '')
-    if not text:
-        text = getattr(card, 'content', '')
+    # Strategy 1: Use YAML description field if present
+    if hasattr(card, 'data') and card.data and hasattr(card.data, 'description'):
+        desc = card.data.description
+        if desc and isinstance(desc, str):
+            desc = clean_text(desc)
+            if desc:
+                if len(desc) > 200:
+                    desc = desc[:197] + "..."
+                return desc
 
+    # Strategy 2: Parse the model card text
+    text = getattr(card, 'text', '') or getattr(card, 'content', '')
     if not text:
         return "No description available"
 
-    # Split the text into lines and find a likely description
     lines = text.split('\n')
     description = ""
     for line in lines:
-        line = line.strip()
-        # Look for lines that are not empty, not markdown headers, and not YAML front matter
-        if line and not line.startswith('---') and not line.startswith('#') and len(line) > 10:
-            description = line
-            break
+        # Skip YAML front matter
+        if line.strip().startswith('---'):
+            continue
+        # Clean the line
+        cleaned = clean_text(line)
+        # Skip empty or very short lines
+        if len(cleaned) < 15:
+            continue
+        # Skip lines that are mostly punctuation or special chars
+        if cleaned.startswith(('*', '-', '#', '=', '|')):
+            continue
+        # Skip lines that look like badges or buttons
+        if '[![' in cleaned or 'https://' in cleaned and len(cleaned) < 50:
+            continue
+        # Found a likely description
+        description = cleaned
+        break
 
     if description:
-        # Trim to max 200 chars
         if len(description) > 200:
             description = description[:197] + "..."
         return description
@@ -42,7 +63,6 @@ def get_brief_description(model_id):
 
 def main():
     api = HfApi()
-    # Fetch first 50 models (you can change the number)
     print("Fetching model list...", file=sys.stderr)
     models = list(api.list_models(limit=50))
 
@@ -50,8 +70,8 @@ def main():
         for i, model in enumerate(models):
             model_id = model.id
             print(f"Processing {i+1}/{len(models)}: {model_id}", file=sys.stderr)
-            description = get_brief_description(model_id)
-            f.write(f"{model_id}: {description}\n")
+            desc = get_brief_description(model_id)
+            f.write(f"{model_id}: {desc}\n")
 
     print(f"Done. Saved {len(models)} models to models.txt", file=sys.stderr)
 
