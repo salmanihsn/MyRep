@@ -55,7 +55,7 @@ def get_brief_description(model_id):
 def main():
     api = HfApi()
     print("Fetching model list...", file=sys.stderr)
-    models = list(api.list_models(limit=50))
+    models = list(api.list_models(limit=100))
 
     with open("models.txt", "w", encoding="utf-8") as f:
         for i, model in enumerate(models):
