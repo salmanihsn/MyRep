@@ -12,25 +12,26 @@ on:
         required: true
         default: 'your_password_here'
       part_size:
-        description: 'Size of each zip part (e.g., 90m, 100m)'
+        description: 'Size of each part (e.g., 90m, 100m)'
         required: false
         default: '90m'
 
 permissions:
-  contents: write   # to push the zip parts back to the repo
+  contents: write
 
 jobs:
   download-split-upload:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-        with:
-          persist-credentials: true
 
-      - name: Install aria2 and zip
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y aria2 zip
+          # Verify installations
+          aria2c --version || echo "aria2 not found"
+          zip --version
 
       - name: Run download and splitting script
         run: |
@@ -40,7 +41,12 @@ jobs:
             --part-size "${{ github.event.inputs.part_size }}" \
             --output-dir "Download-Files"
 
-      - name: Commit and push split parts
+      - name: List generated files (debug)
+        run: |
+          echo "Files in Download-Files:"
+          ls -la Download-Files/
+
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
